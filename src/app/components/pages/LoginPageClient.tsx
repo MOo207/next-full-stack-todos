@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter, useParams, useSearchParams } from "next/navigation";
 import { useTranslations, NextIntlClientProvider } from "next-intl";
-import { signIn } from "next-auth/react";
-import { useRouter, useParams } from "next/navigation";
-import Link from "next/link";
+import { z } from "zod";
+import { signInSchema, createZodErrorMap } from "@/src/app/lib/zod";
+import useAuthStore from "@/src/app/store/authStore";
 import Form from "@/src/app/components/shared/Form";
 import Input from "@/src/app/components/shared/Input";
 import Button from "@/src/app/components/shared/Button";
@@ -16,46 +17,63 @@ const LoginPageClient = ({
 }: {
   locale: string;
   messages: Record<string, string>;
-}) => {
-  return (
-    <NextIntlClientProvider locale={locale} messages={messages}>
-      <LoginContent />
-    </NextIntlClientProvider>
-  );
-};
+}) => (
+  <NextIntlClientProvider locale={locale} messages={messages} timeZone="Asia/Riyadh">
+    <LoginContent />
+  </NextIntlClientProvider>
+);
 
 const LoginContent = () => {
-  const router = useRouter();
   const { locale } = useParams();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const t = useTranslations("Login");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { login, isLoading } = useAuthStore();
 
-  const handleLogin = async (formData: FormData) => {
-    setIsLoading(true);
-    setError(null);
+  const [formError, setFormError] = useState<string | null>(null);
 
+  // Handle errors from query params (e.g., NextAuth)
+  useEffect(() => {
+    const errorParam = searchParams.get("error");
+    if (errorParam) {
+      const errorMessages: Record<string, string> = {
+        CredentialsSignin: t("invalidCredentials"),
+        Configuration: t("serverError"),
+        default: t("error"),
+      };
+      setFormError(errorMessages[errorParam] || errorMessages.default);
+    }
+  }, [searchParams, t]);
+
+  const handleSubmit = async (formData: FormData) => {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
-    try {
-      const result = await signIn("credentials", {
-        redirect: false,
-        email,
-        password,
-        callbackUrl: `/${locale}/todos`,
-      });
+    // Clear previous errors
+    setFormError(null);
 
-      if (result?.ok) {
-        router.push(`/${locale}/todos`);
-      } else {
-        setError(t("error"));
-      }
+    // Set the localized error map for zod
+    z.setErrorMap(createZodErrorMap(t));
+
+    // Validate input fields using zod
+    const validation = signInSchema.safeParse({ email, password });
+    if (!validation.success) {
+      setFormError(
+        validation.error.issues.map((issue) => t(issue.message)).join(", ")
+      );
+      return;
+    }
+
+    try {
+      await login(email, password);
+      router.push(`/${locale}/todos`);
     } catch (err) {
-      setError(t("error"));
-      console.error("Login error:", err);
-    } finally {
-      setIsLoading(false);
+      if (err.message == "CredentialsSignin") {
+        setFormError(t("invalidCredentials"));
+        } else
+        setFormError(t("serverError"));
+        } finally {
+          
     }
   };
 
@@ -66,7 +84,7 @@ const LoginContent = () => {
           <h2 className="text-center text-3xl font-bold text-gray-900">{t("title")}</h2>
           <LanguageSwitcher />
         </div>
-        <Form action={handleLogin} className="space-y-6">
+        <Form action={handleSubmit} className="space-y-6">
           <Input
             name="email"
             type="email"
@@ -79,26 +97,16 @@ const LoginContent = () => {
             placeholder={t("passwordPlaceholder")}
             className="w-full"
           />
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+          {formError && <p className="text-red-500 text-sm">{formError}</p>}
           <Button
             type="submit"
             text={isLoading ? t("loggingIn") : t("loginButton")}
             className={`w-full py-2 px-4 rounded ${
-              isLoading ? "bg-gray-300" : "bg-blue-600 hover:bg-blue-700"
+              isLoading ? "bg-gray-300 cursor-not-allowed" : "bg-indigo-600 hover:bg-indigo-700"
             }`}
+            disabled={isLoading}
           />
         </Form>
-        <div className="text-center">
-          <p className="text-sm">
-            {t("noAccount")}{" "}
-            <Link
-              href={`/${locale}/auth/register`}
-              className="text-blue-600 hover:underline"
-            >
-              {t("registerLink")}
-            </Link>
-          </p>
-        </div>
       </div>
     </div>
   );

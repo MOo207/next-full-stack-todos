@@ -79,7 +79,6 @@ arduino
 Copy code
 http://localhost:3000
 📝 Usage
-Register: Go to /auth/register to create a new account.
 Login: Visit /auth/login to log in with your credentials.
 Manage Todos: Access the main todos page to create, edit, update, or delete todos.
 🤝 Contributing

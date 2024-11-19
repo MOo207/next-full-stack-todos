@@ -1,31 +1,21 @@
 {
-  "Home": {
-    "title": "الصفحة الرئيسية",
-    "welcome": "مرحبًا بك في تطبيق اللغة العربية"
-  },
   "Login": {
     "title": "تسجيل الدخول",
-    "subtitle": "قم بتسجيل الدخول وابدأ باستخدام التطبيق",
+    "subtitle": "قم بتسجيل الدخول إلى حسابك",
     "emailPlaceholder": "البريد الإلكتروني",
     "passwordPlaceholder": "كلمة المرور",
-    "loggingIn": "جارٍ تسجيل الدخول...",
-    "loginButton": "تسجيل الدخول",
-    "noAccount": "ليس لديك حساب؟",
-    "registerLink": "إنشاء حساب",
-    "error": "خطأ"
-  },
-  "Register": {
-    "title": "إنشاء حساب",
-    "subtitle": "قم بإنشاء حساب وابدأ باستخدام التطبيق",
-    "namePlaceholder": "الاسم",
-    "emailPlaceholder": "البريد الإلكتروني",
-    "passwordPlaceholder": "كلمة المرور",
-    "confirmPasswordPlaceholder": "تأكيد كلمة المرور",
-    "registering": "جارٍ إنشاء الحساب...",
-    "registerButton": "إنشاء حساب",
-    "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
-    "loginLink": "تسجيل الدخول",
-    "error": "خطأ"
+    "loggingIn": "تسجيل الدخول...",
+    "loginButton": "سجل الدخول",
+    "error": "حدث خطأ غير متوقع.",
+    "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صالحة.",
+    "missingFields": "البريد الإلكتروني أو كلمة المرور مطلوبين.",
+    "serverError": "حدث خطأ في الخادم.",
+    "required": "هذا الحقل مطلوب.",
+    "invalidEmail": "الرجاء إدخال عنوان بريد إلكتروني صالح.",
+    "weakPassword": "كلمة المرور يجب أن تكون قوية.",
+    "passwordTooShort": "كلمة المرور يجب أن تكون أطول من 3 أحرف.",
+    "passwordTooLong": "كلمة المرور يجب أن تكون أقصر من 8 أحرف.",
+    "tooManyRequests": "الرجاء الانتظار قليلا قبل محاولة تسجيل الدخول مرة أخرى."
   },
   "TodoPage": {
     "title": "قائمة المهام",
