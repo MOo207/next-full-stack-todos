@@ -1,16 +1,14 @@
 "use client";
 
-import { useRef } from "react";
-import { ReactNode } from "react";
+import { useRef, ReactNode } from "react";
 
 interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {
   children: ReactNode;
   action: (formData: FormData) => Promise<void | boolean>;
-  className?: string;
-  onCustomSubmit?: () => void; // Renamed to avoid conflict with native onSubmit
+  onSuccess?: () => void;
 }
 
-const Form = ({ children, action, className, onCustomSubmit, ...rest }: FormProps) => {
+const Form = ({ children, action, onSuccess, ...rest }: FormProps) => {
   const ref = useRef<HTMLFormElement>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -20,12 +18,12 @@ const Form = ({ children, action, className, onCustomSubmit, ...rest }: FormProp
 
     if (success !== false) {
       ref.current?.reset();
+      onSuccess?.();
     }
-    onCustomSubmit?.(); // Call additional custom logic if provided
   };
 
   return (
-    <form ref={ref} className={className} onSubmit={handleSubmit} {...rest}>
+    <form ref={ref} className="form-base" onSubmit={handleSubmit} {...rest}>
       {children}
     </form>
   );

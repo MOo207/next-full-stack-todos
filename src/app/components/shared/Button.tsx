@@ -7,26 +7,28 @@ interface ButtonProps {
   type?: "button" | "submit" | "reset";
   text: string | ReactNode;
   onClick?: () => void;
-  actionButton?: boolean;
-  ariaLabel?: string; // For accessibility
+  variant?: "primary" | "secondary";
+  className?: string;
 }
 
 const Button = ({
-  type = "button", // Default type
+  type = "button",
   text,
   onClick,
-  actionButton = false, // Default to false
-  ariaLabel,
+  variant = "primary",
+  className,
 }: ButtonProps) => {
   return (
     <button
       onClick={onClick}
       type={type}
-      aria-label={ariaLabel}
       className={clsx(
-        actionButton
-          ? "bg-orange-700 rounded-full p-2 text-white"
-          : "bg-orange-700 px-2 text-white"
+        "button-base",
+        {
+          "button-primary": variant === "primary",
+          "button-secondary": variant === "secondary",
+        },
+        className
       )}
     >
       {text}
