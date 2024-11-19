@@ -1,16 +1,19 @@
+
 # Next.js Full Stack Todo Application
 
-This is a full-stack Todo application built with **Next.js** and **Prisma**, styled with **Tailwind CSS**, and secured with **Next Auth** for authentication. The app supports **internationalization (i18n)**, allowing users to switch seamlessly between English and Arabic.
+This is a full-stack Todo application built with **Next.js**, **Prisma**, and **PostgreSQL**, styled with **Tailwind CSS**, and secured with **NextAuth.js** for authentication. The app leverages **server actions** for optimized backend interactions and supports **internationalization (i18n)**, allowing users to seamlessly switch between English and Arabic.
 
 ---
 
 ## 🚀 Features
 
-- **User Authentication**: Register, log in, and log out securely.
-- **Todo Management**: Create, edit, update, and delete todos with an optimized UI for a smoother experience.
-- **Internationalization (i18n)**: Supports English and Arabic, enabling easy language switching.
-- **Responsive Design**: Fully responsive for desktop and mobile.
-- **Feedback and Error Handling**: Loading indicators and clear error messages for better user experience.
+- **User Authentication**: Secure login and logout functionality using NextAuth.js.
+- **Todo Management**: Create, update, delete, and view todos with a modern UI.
+- **Server Actions**: Fast and efficient backend updates without the need for WebSocket integration.
+- **Internationalization (i18n)**: Dual-language support (English and Arabic) powered by next-intl.
+- **Responsive Design**: Fully optimized for both desktop and mobile screens.
+- **Error Handling**: Clear error messages and feedback for better user experience.
+- **PostgreSQL Database**: Robust and scalable database support using Prisma.
 
 ---
 
@@ -21,14 +24,42 @@ This is a full-stack Todo application built with **Next.js** and **Prisma**, sty
 - **React**: Component-based UI development.
 - **Tailwind CSS**: Utility-first CSS framework for styling.
 - **Zustand**: Lightweight state management library.
-- **Next Intl**: For internationalization (i18n).
+- **next-intl**: For internationalization (i18n).
 
 ### Backend:
 - **Prisma**: Type-safe ORM for database interactions.
-- **Next Auth**: Authentication for user sessions.
+- **NextAuth.js**: Authentication for user sessions.
 
 ### Database:
-- **SQLite**: Default database (can switch to other Prisma-supported databases).
+- **PostgreSQL**: Production-ready relational database.
+
+---
+
+## 📂 File Structure
+
+```
+src/
+├── app/                      # Main application folder
+│   ├── [locale]/             # Localization-specific routes
+│   │   └── auth/             # Authentication pages (login, etc.)
+│   │   └── todos/            # Todo management pages
+│   ├── actions/              # Server-side actions for backend operations
+│   ├── api/                  # API route handlers
+│   ├── components/           # Reusable UI components (Form, Input, Button, etc.)
+│   ├── lib/                  # Utilities (Prisma client, zod schemas, etc.)
+│   ├── services/             # Backend services (e.g., authentication, todo operations)
+│   ├── store/                # Zustand state management
+│   ├── layout.tsx            # Application layout
+│   ├── globals.css           # Global styles
+│   └── page.tsx              # Main application entry point
+├── prisma/                   # Prisma schema and migrations
+│   ├── schema.prisma         # Prisma database schema
+│   └── migrations/           # Prisma migration files
+├── public/                   # Public assets
+├── dockerfile                # Dockerfile for containerization
+├── .env.example              # Example environment variables
+└── README.md                 # Project documentation
+```
 
 ---
 
@@ -38,6 +69,7 @@ This is a full-stack Todo application built with **Next.js** and **Prisma**, sty
 Ensure the following are installed on your system:
 - **Node.js** (version 14 or later)
 - **npm** or **yarn**
+- **PostgreSQL** (version 13 or later)
 
 ---
 
@@ -45,48 +77,88 @@ Ensure the following are installed on your system:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/next-full-stack-todos.git
+   git clone https://github.com/MOo207/next-full-stack-todos.git
    cd next-full-stack-todos
+   ```
 
 2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-bash
-Copy code
-npm install
-# or
-yarn install
-Set up environment variables: Create a .env file in the root of the project with the following:
+3. Configure environment variables:
+   - Create a `.env` file in the root directory with the following:
+     ```
+     NEXTAUTH_SECRET=your_secret_here
+     NEXTAUTH_URL=http://localhost:3000
+     DATABASE_URL=postgresql://username:password@localhost:5432/your_database
+     ```
 
-env
-Copy code
-NEXTAUTH_SECRET=your_secret_here
-DATABASE_URL="file:./dev.db"
-Run database migrations:
+4. Set up the database:
+   - Run Prisma migrations:
+     ```bash
+     npx prisma migrate dev --name init
+     ```
 
-bash
-Copy code
-npx prisma migrate dev --name init
-Start the development server:
+5. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-bash
-Copy code
-npm run dev
-# or
-yarn dev
-Open your browser and navigate to:
+6. Open the application:
+   - Navigate to [http://localhost:3000](http://localhost:3000).
 
-arduino
-Copy code
-http://localhost:3000
-📝 Usage
-Login: Visit /auth/login to log in with your credentials.
-Manage Todos: Access the main todos page to create, edit, update, or delete todos.
-🤝 Contributing
-Contributions are always welcome!
+---
 
-Submit a pull request.
-Open an issue for bugs or feature requests.
-📜 License
-This project is licensed under the MIT License. See the LICENSE file for details.
+## 🧪 Running Tests
 
-⭐ Star this project on GitHub and share your feedback! 🚀
+1. **Unit Tests**:
+   - Run backend unit tests:
+     ```bash
+     npm run test
+     ```
+
+2. **E2E Tests**:
+   - Run Cypress for end-to-end testing:
+     ```bash
+     npm run cypress
+     ```
+
+---
+
+## 📦 Deployment with Docker
+
+1. **Build the Docker Image**:
+   ```bash
+   docker build -t nextjs-todos-app .
+   ```
+
+2. **Run the Docker Container**:
+   ```bash
+   docker run -p 3000:3000 --env-file .env nextjs-todos-app
+   ```
+
+3. **With Docker Compose**:
+   - Use the provided `docker-compose.yml` to set up both the app and PostgreSQL:
+     ```bash
+     docker-compose up --build
+     ```
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Here's how you can help:
+- Submit pull requests for new features or bug fixes.
+- Open issues for suggestions or feedback.
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License. See the LICENSE file for more details.
+
+---
+
+⭐ If you found this project helpful, give it a star on GitHub!
+
