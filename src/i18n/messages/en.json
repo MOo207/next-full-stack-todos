@@ -1,0 +1,47 @@
+{
+  "Home": {
+    "title": "Home Page",
+    "welcome": "Welcome to the Arabic Language App"
+  },
+  "Login": {
+    "title": "Log in",
+    "subtitle": "Log in and start using the app",
+    "emailPlaceholder": "Email",
+    "passwordPlaceholder": "Password",
+    "loggingIn": "Logging in...",
+    "loginButton": "Log in",
+    "noAccount": "Don't have an account?",
+    "registerLink": "Register",
+    "error": "Error"
+  },
+  "Register": {
+    "title": "Register",
+    "subtitle": "Create an account and start using the app",
+    "namePlaceholder": "Name",
+    "emailPlaceholder": "Email",
+    "passwordPlaceholder": "Password",
+    "confirmPasswordPlaceholder": "Confirm Password",
+    "registering": "Registering...",
+    "registerButton": "Register",
+    "alreadyHaveAccount": "Already have an account?",
+    "loginLink": "Log in",
+    "error": "Error"
+  },
+  "TodoPage": {
+    "title": "Todo List",
+    "newTodoPlaceholder": "New Todo",
+    "addButton": "Add Todo",
+    "editButton": "Edit",
+    "completed": "Completed",
+    "notCompleted": "Not Completed",
+    "deleteButton": "Delete",
+    "loading": "Loading...",
+    "fetchError": "Failed to fetch todos.",
+    "addError": "Failed to add todo.",
+    "updateError": "Failed to update todo.",
+    "deleteError": "Failed to delete todo.",
+    "toggleError": "Failed to toggle todo status.",
+    "newButton": "New Button Text",
+    "signOut": "Sign Out"
+  }
+}
