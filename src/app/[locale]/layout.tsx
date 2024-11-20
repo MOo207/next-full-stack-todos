@@ -1,8 +1,8 @@
 import { NextIntlClientProvider } from "next-intl";
 import { SessionProvider } from "next-auth/react";
-import getMessages from "@/src/i18n/request";
+import "./globals.css";
 
-export default async function LocaleLayout({
+export default async function Layout({
   children,
   params,
 }: {
