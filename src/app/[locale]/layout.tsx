@@ -18,7 +18,7 @@ export default async function LocaleLayout({
   }
 
   // Fetch messages for the locale
-  const messages = await getMessages({ requestLocale: locale });
+  const messages = await getMessages({ requestLocale: locale.toString() });
   return (
     <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"} suppressHydrationWarning>
       <body>
