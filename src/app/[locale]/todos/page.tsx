@@ -3,13 +3,7 @@ import { fetchTodosByUser } from "@/src/app/actions/todoActions";
 import TodosPageClient from "@/src/app/components/pages/TodosPageClient";
 import { redirect } from "next/navigation";
 
-interface PageProps {
-  params: {
-    locale: string; // Ensure this matches the dynamic segment [locale]
-  };
-}
-
-const TodosPage = async ({ params }:  Awaited<PageProps>) => {
+const TodosPage = async ({ params }:  any) => {
   const { locale } = await params; // Extract locale from params
 
   // Authenticate the user session
