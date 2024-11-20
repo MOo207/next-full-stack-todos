@@ -1,6 +1,7 @@
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 import useTodoStore from "../todoStore";
 import * as todoActions from "@/src/app/actions/todoActions";
+import { expect } from '@jest/globals';
 
 // Mock actions
 jest.mock("@/src/app/actions/todoActions", () => ({
@@ -24,10 +25,10 @@ describe("todoStore", () => {
     });
   });
 
-  it("should fetch todos", async () => {
+  it("should fetch todos and exclude todos with null titles", async () => {
     const mockTodos = [
       { id: "1", title: "Test Todo 1", isCompleted: false },
-      { id: "2", title: "Test Todo 2", isCompleted: true },
+      { id: "2", title: null, isCompleted: true },
     ];
     (todoActions.fetchTodosByUser as jest.Mock).mockResolvedValue(mockTodos);
 
@@ -37,80 +38,91 @@ describe("todoStore", () => {
       await result.current.fetchTodos("test-user");
     });
 
-    expect(result.current.todos).toEqual(mockTodos);
+    expect(result.current.todos).toEqual([{ id: "1", title: "Test Todo 1", isCompleted: false }]);
     expect(todoActions.fetchTodosByUser).toHaveBeenCalledWith("test-user");
   });
 
-  it("should add a new todo", async () => {
-    const mockTodo = { id: "1", title: "Test Todo", isCompleted: false };
-    (todoActions.createTodo as jest.Mock).mockResolvedValue(mockTodo);
+  it("should optimistically add a new todo and rollback on error", async () => {
+    const mockError = new Error("Failed to add todo.");
+    (todoActions.createTodo as jest.Mock).mockRejectedValue(mockError);
 
     const { result } = renderHook(() => useTodoStore());
 
     await act(async () => {
-      await result.current.addTodo("Test Todo", "test-user");
+      await result.current.addTodo("Optimistic Todo", "test-user");
     });
 
+    // Optimistic state
     expect(result.current.todos).toHaveLength(1);
-    expect(result.current.todos[0]).toEqual(mockTodo);
-    expect(todoActions.createTodo).toHaveBeenCalledWith(expect.any(FormData), "test-user");
+    expect(result.current.todos[0].title).toBe("Optimistic Todo");
+
+    // After rollback
+    expect(result.current.todos.length).toBe(0);
+    expect(result.current.error).toEqual(mockError.message);
   });
 
-  it("should toggle a todo's status", async () => {
+  it("should toggle a todo's status optimistically and handle errors", async () => {
     const mockTodo = { id: "1", title: "Test Todo", isCompleted: false };
-    (todoActions.todoStatus as jest.Mock).mockResolvedValue({
-      ...mockTodo,
-      isCompleted: true,
-    });
+    const mockError = new Error("Failed to toggle todo.");
+    (todoActions.todoStatus as jest.Mock).mockRejectedValue(mockError);
 
     const { result } = renderHook(() => useTodoStore());
-    await act(async () => {
-      await result.current.addTodo("Test Todo", "test-user");
+    act(() => {
+      result.current.setTodos([mockTodo]);
     });
 
-    act(() => {
+    await act(async () => {
       result.current.updateTodoStatus("1");
     });
 
+    // Optimistic state
     expect(result.current.todos[0].isCompleted).toBe(true);
-    expect(todoActions.todoStatus).toHaveBeenCalledWith(expect.any(FormData));
+
+    // Error handling
+    expect(result.current.error).toBe(mockError.message);
   });
 
-  it("should update a todo's title", async () => {
+  it("should update a todo's title optimistically and handle errors", async () => {
     const mockTodo = { id: "1", title: "Test Todo", isCompleted: false };
-    (todoActions.editTodo as jest.Mock).mockResolvedValue({
-      ...mockTodo,
-      title: "Updated Todo",
-    });
+    const mockError = new Error("Failed to update title.");
+    (todoActions.editTodo as jest.Mock).mockRejectedValue(mockError);
 
     const { result } = renderHook(() => useTodoStore());
-    await act(async () => {
-      await result.current.addTodo("Test Todo", "test-user");
-    });
-
     act(() => {
-      result.current.updateTodoTitle("1", "Updated Todo");
+      result.current.setTodos([mockTodo]);
     });
 
-    expect(result.current.todos[0].title).toBe("Updated Todo");
-    expect(todoActions.editTodo).toHaveBeenCalledWith(expect.any(FormData));
+    await act(async () => {
+      result.current.updateTodoTitle("1", "Updated Title");
+    });
+
+    // Optimistic state
+    expect(result.current.todos[0].title).toBe("Updated Title");
+
+    // Error handling
+    expect(result.current.error).toBe(mockError.message);
   });
 
-  it("should delete a todo", async () => {
-    (todoActions.deleteTodo as jest.Mock).mockResolvedValueOnce(null);
+  it("should delete a todo optimistically and rollback on error", async () => {
+    const mockTodo = { id: "1", title: "Test Todo", isCompleted: false };
+    const mockError = new Error("Failed to delete todo.");
+    (todoActions.deleteTodo as jest.Mock).mockRejectedValue(mockError);
 
     const { result } = renderHook(() => useTodoStore());
-    await act(async () => {
-      await result.current.addTodo("Test Todo", "test-user");
+    act(() => {
+      result.current.setTodos([mockTodo]);
     });
 
-    const todoId = result.current.todos[0].id;
-
     await act(async () => {
-      await result.current.removeTodo(todoId);
+      result.current.removeTodo("1");
     });
 
+    // Optimistic state
     expect(result.current.todos).toHaveLength(0);
-    expect(todoActions.deleteTodo).toHaveBeenCalledWith(expect.any(FormData));
+
+    // Rollback on error
+    expect(result.current.todos).toHaveLength(1);
+    expect(result.current.todos[0]).toEqual(mockTodo);
+    expect(result.current.error).toBe(mockError.message);
   });
 });

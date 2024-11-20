@@ -13,6 +13,7 @@ jest.mock("@/src/app/lib/prisma", () => ({
   }));
   
   import { prisma } from "@/src/app/lib/prisma";
+  import { expect } from '@jest/globals';
   import * as todoService from "@/src/app/services/todoService";
   
   describe("todoService", () => {

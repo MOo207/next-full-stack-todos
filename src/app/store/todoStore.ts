@@ -99,15 +99,19 @@ const useTodoStore = create<TodoState>((set) => ({
 
   removeTodo: async (todoId: string) => {
     const originalTodos = [...useTodoStore.getState().todos];
+    console.log("Before delete:", originalTodos);
+    console.log("Deleting todo with id:", todoId);
     set((state) => ({
       todos: state.todos.filter((todo) => todo.id !== todoId),
-    })); // Optimistic delete
-
+    }));
+    console.log("After delete:", useTodoStore.getState().todos);
+  
     try {
       const formData = new FormData();
       formData.append("inputId", todoId);
       await deleteTodo(formData); // Server sync
     } catch (error: any) {
+      console.log("Rollback due to error:", error.message);
       set({ todos: originalTodos }); // Rollback on error
       set({ error: error.message || "Failed to delete todo." });
     }
