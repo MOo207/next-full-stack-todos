@@ -9,7 +9,7 @@ interface PageProps {
 }
 
 const LoginPage = async ({ params }: PageProps) => {
-  const { locale } = await params; // Extract locale from params
+  const { locale } = params; // Extract locale from params
 
   // Authenticate the user session
   const session = await auth();
