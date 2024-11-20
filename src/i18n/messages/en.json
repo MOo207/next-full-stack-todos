@@ -12,9 +12,8 @@
     "serverError": "Unable to connect to the server. Please try again later.",
     "required": "This field is required.",
     "invalidEmail": "Please enter a valid email address.",
-    "weakPassword": "Password must be at least 8 characters.",
     "passwordTooShort": "Password must be at least 3 characters.",
-    "passwordTooLong": "Password must be less than 8 characters.",
+    "passwordTooLong": "Password must be less than ten characters.",
     "tooManyRequests": "Too many failed attempts. Please try again later."
   },
   "TodoPage": {

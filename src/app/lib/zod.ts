@@ -18,7 +18,7 @@ export const signInSchema = object({
     .email("invalidEmail"),
   password: string({ required_error: "required" })
     .min(3, "passwordTooShort")
-    .max(8, "passwordTooLong"),
+    .max(10, "passwordTooLong"),
 });
 
 // Schema for Todos
