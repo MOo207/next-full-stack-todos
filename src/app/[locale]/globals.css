@@ -70,3 +70,19 @@
   @apply mx-auto max-w-4xl px-6 py-8;
 }
 
+/* Animation classes */
+.fade-in {
+  @apply opacity-0 transition-opacity duration-700 ease-in-out;
+}
+
+.fade-in-active {
+  @apply opacity-100;
+}
+
+.slide-in {
+  @apply transform translate-y-10 transition-transform duration-700 ease-in-out;
+}
+
+.slide-in-active {
+  @apply translate-y-0;
+}

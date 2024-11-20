@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 interface HeaderProps {
   greeting: string; // Fully formatted greeting with name already interpolated
@@ -15,15 +16,40 @@ export const Header = ({ greeting, locale }: HeaderProps) => {
     year: "numeric",
   });
 
+  // Define animation variants
+  const variants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
-    <div className="mb-6">
+    <motion.div
+      className="mb-6"
+      initial="hidden"
+      animate="visible"
+      exit="hidden"
+      variants={variants}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
       {/* Greeting */}
-      <h1 className="text-2xl font-bold text-gray-900">
+      <motion.h1
+        className="text-2xl font-bold text-gray-900"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.4, ease: "easeInOut" }}
+      >
         {greeting} 😊
-      </h1>
+      </motion.h1>
 
       {/* Date */}
-      <p className="text-sm text-gray-500">{formattedDate}</p>
-    </div>
+      <motion.p
+        className="text-sm text-gray-500"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2, duration: 0.5 }}
+      >
+        {formattedDate}
+      </motion.p>
+    </motion.div>
   );
 };

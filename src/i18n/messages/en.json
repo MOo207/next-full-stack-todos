@@ -15,7 +15,8 @@
     "invalidEmail": "Please enter a valid email address.",
     "passwordTooShort": "Password must be at least 3 characters.",
     "passwordTooLong": "Password must be less than ten characters.",
-    "tooManyRequests": "Too many failed attempts. Please try again later."
+    "tooManyRequests": "Too many failed attempts. Please try again later.",
+    "loading": "Loading..."
   },
   "TodoPage": {
     "title": "Todo List",

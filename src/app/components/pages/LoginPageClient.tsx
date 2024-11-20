@@ -10,6 +10,7 @@ import Form from "@/src/app/components/shared/Form";
 import Input from "@/src/app/components/shared/Input";
 import Button from "@/src/app/components/shared/Button";
 import LanguageSwitcher from "@/src/app/components/shared/LanguageSwitcher";
+import LoadingAnimation from "@/src/app/components/animation/LoadingAnimation";
 
 const LoginPageClient = ({
   locale,
@@ -47,6 +48,7 @@ const LoginContent = () => {
       };
       setFormError(errorMessages[errorParam] || errorMessages.default);
     }
+
   }, [searchParams, t]);
 
   const handleSubmit = async (formData: FormData) => {
@@ -67,7 +69,7 @@ const LoginContent = () => {
       );
       return;
     }
-
+  
     try {
       await login(email, password);
       router.push(`/${locale}/todos`);
@@ -80,6 +82,10 @@ const LoginContent = () => {
       }
     }
   };
+
+  if (isLoading) {
+    return <LoadingAnimation message={t("loading")} />;
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-16 px-6 sm:px-8 lg:px-10">
