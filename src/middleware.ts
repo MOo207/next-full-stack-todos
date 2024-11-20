@@ -12,7 +12,7 @@ export default async function middleware(req: NextRequest) {
 
   const defaultLocale = routing.defaultLocale || "en";
   const validLocales = routing.locales || [];
-  const locale = validLocales.includes(url.pathname.split("/")[1])
+  const locale = validLocales.includes(url.pathname.split("/")[1] as "en" | "ar")
     ? url.pathname.split("/")[1]
     : defaultLocale;
 
@@ -44,7 +44,7 @@ export default async function middleware(req: NextRequest) {
   }
 
   // Redirect to default locale if missing
-  if (!validLocales.includes(url.pathname.split("/")[1])) {
+  if (!validLocales.includes(url.pathname.split("/")[1] as "en" | "ar")) {
     url.pathname = `/${defaultLocale}${url.pathname}`;
     return NextResponse.redirect(url);
   }

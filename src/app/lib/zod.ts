@@ -2,7 +2,7 @@ import { object, string, setErrorMap } from "zod";
 
 // Define the custom error map for zod
 export const createZodErrorMap = (t: (key: string) => string) => {
-  return (issue, ctx) => {
+  return (issue: { code: any; }, ctx: { defaultError: any; }) => {
     const translationKey = `${issue.code}`; // e.g., "invalid_string"
     const defaultMessage = t(translationKey) || ctx.defaultError;
 

@@ -9,8 +9,6 @@ export const routing = defineRouting({
   // Used when no locale matches
   defaultLocale: 'en',
 
-  // timezone
-  timezone: 'UTC+3',
 });
  
 // Lightweight wrappers around Next.js' navigation APIs
