@@ -7,9 +7,10 @@ export default async function LocaleLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { locale: any };
+  params: Promise<{ locale: string }>; // Explicitly declare it as a Promise
 }) {
-  const { locale } = await params;
+  const resolvedParams = await params; // Await the params
+  const { locale } = resolvedParams;
 
   // Validate the locale
   if (!["en", "ar"].includes(locale)) {
