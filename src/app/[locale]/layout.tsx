@@ -18,7 +18,7 @@ export default async function LocaleLayout({
   }
 
   // Fetch messages for the locale
-  const messages = await getMessages({ requestLocale: locale.toString() });
+  const messages = (await import(`@/src/i18n/messages/${locale}.json`)).default;
   return (
     <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"} suppressHydrationWarning>
       <body>
