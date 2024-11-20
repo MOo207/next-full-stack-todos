@@ -3,7 +3,7 @@
 import { AiOutlineCheckCircle } from "react-icons/ai";
 
 interface TodoToggleProps {
-  todo: { id: string; title: string; isCompleted: boolean };
+  todo: { id: string; title: string | null; isCompleted: boolean };
   onToggle: (id: string) => Promise<void>;
 }
 

@@ -5,7 +5,7 @@ import { TodoEdit } from "@/src/app/components/todos/TodoEdit";
 import { TodoToggle } from "@/src/app/components/todos/TodoToggle";
 
 interface TodoItemProps {
-  todo: { id: string; title: string; isCompleted: boolean };
+  todo: { id: string; title: string | null; isCompleted: boolean };
   onEdit: (id: string, newTitle: string) => Promise<void>;
   onToggle: (id: string) => Promise<void>;
   onDelete: (id: string) => Promise<void>;

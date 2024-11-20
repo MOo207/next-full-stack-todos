@@ -6,13 +6,13 @@ import Button from "@/src/app/components/shared/Button";
 import { AiOutlineCheck, AiOutlineClose, AiOutlineEdit } from "react-icons/ai"; // Import icons
 
 interface TodoEditProps {
-  todo: { id: string; title: string };
+  todo: { id: string; title: string | null;};
   onEdit: (id: string, newTitle: string) => Promise<void>;
 }
 
 export const TodoEdit = ({ todo, onEdit }: TodoEditProps) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [editValue, setEditValue] = useState(todo.title);
+  const [editValue, setEditValue] = useState(todo.title || "");
 
   const handleSave = async () => {
     if (!editValue.trim()) {

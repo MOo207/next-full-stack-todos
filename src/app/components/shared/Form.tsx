@@ -4,7 +4,7 @@ import { useRef, ReactNode } from "react";
 
 interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {
   children: ReactNode;
-  action: (formData: FormData) => Promise<void | boolean>;
+  action?: (formData: FormData) => Promise<void | boolean>;
   onSuccess?: () => void;
 }
 
@@ -14,7 +14,7 @@ const Form = ({ children, action, onSuccess, ...rest }: FormProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(ref.current!);
-    const success = await action(formData);
+    const success = action ? await action(formData) : false;
 
     if (success !== false) {
       ref.current?.reset();
