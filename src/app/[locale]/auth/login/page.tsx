@@ -1,10 +1,15 @@
-// src/app/[locale]/auth/login/page.tsx
 import { auth } from "@/src/app/api/auth/[...nextauth]/auth";
 import LoginPageClient from "@/src/app/components/pages/LoginPageClient";
 import { redirect } from "next/navigation";
 
-const LoginPage = async ({ params }: { params: { locale: string } }) => {
-  const { locale } = await params;
+interface PageProps {
+  params: {
+    locale: string; // Ensure this matches the dynamic segment [locale]
+  };
+}
+
+const LoginPage = async ({ params }: PageProps) => {
+  const { locale } = await params; // Extract locale from params
 
   // Authenticate the user session
   const session = await auth();
