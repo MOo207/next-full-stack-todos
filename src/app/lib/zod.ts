@@ -26,7 +26,4 @@ export const todoSchema = object({
   title: string({ required_error: "required" })
     .min(1, "required")
     .max(32, "titleTooLong"),
-  description: string({ required_error: "required" })
-    .min(1, "required")
-    .max(256, "descriptionTooLong"),
 });

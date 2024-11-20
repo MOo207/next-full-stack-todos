@@ -4,6 +4,7 @@
     "subtitle": "قم بتسجيل الدخول إلى حسابك",
     "emailPlaceholder": "البريد الإلكتروني",
     "passwordPlaceholder": "كلمة المرور",
+    "forgotPassword": "نسيت كلمة المرور؟",
     "loggingIn": "تسجيل الدخول...",
     "loginButton": "سجل الدخول",
     "error": "حدث خطأ غير متوقع.",
@@ -31,6 +32,9 @@
     "deleteError": "فشل في حذف المهمة.",
     "toggleError": "فشل في تبديل حالة المهمة.",
     "newButton": "مهمة جديدة",
-    "signOut": "تسجيل الخروج"
+    "signOut": "تسجيل الخروج",
+    "titleTooLong": "عنوان المهمة يجب أن يكون أقصر من 32 حرفًا.",
+    "greeting": "مرحبًا، {name}!",
+    "AddTodoPlaceholder" : "اضف مهمة جديدة"
   }
 }

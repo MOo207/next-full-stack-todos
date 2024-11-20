@@ -14,8 +14,10 @@ interface TodoItemProps {
 const TodoItem = ({ todo, onEdit, onToggle, onDelete }: TodoItemProps) => {
   return (
     <div
-      className={`flex items-center justify-between p-2 border rounded ${
-        todo.isCompleted ? "bg-gray-100 line-through" : "bg-white"
+      className={`flex items-center justify-between p-4 border-b border-gray-200 transition-shadow rounded-lg ${
+        todo.isCompleted
+        ? "bg-gray-50 shadow-lg text-gray-500 line-through" // Elevated shadow for completed tasks
+        : "bg-white shadow-md text-gray-900" // Subtle shadow for active tasks
       }`}
     >
       <TodoToggle todo={todo} onToggle={onToggle} />

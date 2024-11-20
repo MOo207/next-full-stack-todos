@@ -33,7 +33,7 @@ export default {
         }
 
         // Return user if credentials are valid
-        return { id: user.id, email: user.email };
+        return { id: user.id, email: user.email, name: user.name };
       },
     }),
   ],
@@ -43,17 +43,23 @@ export default {
   },
   callbacks: {
     // Customize the session object
-    async session({ session, user, token }) {
+    async session({ session, token }) {
       if (token?.id) {
         session.user.id = token.id as string; // Add user ID to the session
+      }
+      if (token?.name) {
+        session.user.name = token.name as string; // Add user name to the session
       }
       return session;
     },
 
-    // Pass the user ID to the token object
+    // Pass the user ID and name to the token object
     async jwt({ token, user }) {
       if (user?.id) {
         token.id = user.id; // Store the user ID in the JWT
+      }
+      if (user?.name) {
+        token.name = user.name; // Store the user name in the JWT
       }
       return token;
     },

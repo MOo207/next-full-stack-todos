@@ -15,6 +15,7 @@ const TodosPage = async ({ params }:  any) => {
   }
 
   const userId = session.user.id;
+  const userName = session.user.name || "Guest";
 
   // Fetch todos server-side
   const todos = await fetchTodosByUser(userId);
@@ -28,6 +29,7 @@ const TodosPage = async ({ params }:  any) => {
       userId={userId}
       locale={locale}
       messages={messages}
+      userName={userName}
     />
   );
 };

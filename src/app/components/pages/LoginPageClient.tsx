@@ -18,7 +18,11 @@ const LoginPageClient = ({
   locale: string;
   messages: Record<string, string>;
 }) => (
-  <NextIntlClientProvider locale={locale} messages={messages} timeZone="Asia/Riyadh">
+  <NextIntlClientProvider
+    locale={locale}
+    messages={messages}
+    timeZone="Asia/Riyadh"
+  >
     <LoginContent />
   </NextIntlClientProvider>
 );
@@ -69,45 +73,73 @@ const LoginContent = () => {
       router.push(`/${locale}/todos`);
     } catch (err) {
       const error = err as Error;
-      if (error.message == "CredentialsSignin") {
+      if (error.message === "CredentialsSignin") {
         setFormError(t("invalidCredentials"));
-        } else
+      } else {
         setFormError(t("serverError"));
-        } finally {
-          
+      }
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-16 px-6 sm:px-8 lg:px-10">
+      <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md space-y-8">
+        {/* Title and Language Switcher */}
         <div className="flex items-center justify-between">
-          <h2 className="text-center text-3xl font-bold text-gray-900">{t("title")}</h2>
+          <div className="text-left space-y-1">
+            <h1 className="text-3xl font-bold text-gray-900">{t("title")}</h1>
+            <p className="text-sm text-gray-500">{t("subtitle")}</p>
+          </div>
           <LanguageSwitcher />
         </div>
-        <Form action={handleSubmit} className="space-y-6">
-          <Input
-            name="email"
-            type="email"
-            placeholder={t("emailPlaceholder")}
-            className="w-full"
-          />
-          <Input
-            name="password"
-            type="password"
-            placeholder={t("passwordPlaceholder")}
-            className="w-full"
-          />
-          {formError && <p className="text-red-500 text-sm">{formError}</p>}
+
+        {/* Form */}
+        <Form action={handleSubmit} className="space-y-4">
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
+              {t("emailPlaceholder")}
+            </label>
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              placeholder={t("emailPlaceholder")}
+              className="mt-1 w-full border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 rounded-md"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
+              {t("passwordPlaceholder")}
+            </label>
+            <Input
+              id="password"
+              name="password"
+              type="password"
+              placeholder={t("passwordPlaceholder")}
+              className="mt-1 w-full border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 rounded-md"
+            />
+          </div>
+          {formError && <p className="text-error">{formError}</p>}
           <Button
             type="submit"
             text={isLoading ? t("loggingIn") : t("loginButton")}
-            className={`w-full py-2 px-4 rounded ${
-              isLoading ? "bg-gray-300 cursor-not-allowed" : "bg-indigo-600 hover:bg-indigo-700"
+            className={`w-full py-2 px-4 rounded-lg ${
+              isLoading
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-indigo-600 hover:bg-indigo-700 text-white"
             }`}
             disabled={isLoading}
           />
         </Form>
+
+        {/* Footer */}
+        <p className="text-center text-sm text-gray-500">{t("forgotPassword")}</p>
       </div>
     </div>
   );

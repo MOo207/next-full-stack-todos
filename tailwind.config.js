@@ -2,7 +2,7 @@ const colors = require("tailwindcss/colors");
 
 module.exports = {
   content: [
-    "./src/**/*.{js,ts,jsx,tsx}", // Adjust based on your folder structure
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
@@ -15,10 +15,10 @@ module.exports = {
           DEFAULT: "#4b445c",
           dark: "#3e374c",
         },
-        danger: "#d9534f",
+        danger: "#d9534f", // Danger color for error messages
         light: "#f8f9fc",
         dark: "#111111",
-        gray: colors.gray, // Ensure full gray palette is included
+        gray: colors.gray,
         accent: "#e7c8ff",
       },
       fontFamily: {

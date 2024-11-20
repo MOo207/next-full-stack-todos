@@ -4,6 +4,7 @@
     "subtitle": "Log in and start using the app",
     "emailPlaceholder": "Email",
     "passwordPlaceholder": "Password",
+    "forgotPassword": "Forgot password?",
     "loggingIn": "Logging in...",
     "loginButton": "Log in",
     "error": "An unexpected error occurred.",
@@ -31,6 +32,9 @@
     "deleteError": "Failed to delete todo.",
     "toggleError": "Failed to toggle todo status.",
     "newButton": "New Button Text",
-    "signOut": "Sign Out"
+    "signOut": "Sign Out",
+    "titleTooLong": "Todo title must be less than 32 characters.",
+    "greeting": "Hello, {name}!",
+    "AddTodoPlaceholder" : "Add New Todo"
   }
 }

@@ -7,26 +7,66 @@
 /* Typography */
 .title {
     @apply text-4xl font-bold text-dark;
-  }
-  
-  .subtitle {
-    @apply text-sm font-medium text-gray-600; /* Use gray-600 instead of gray-500 */
-  }
+}
+
+.subtitle {
+    @apply text-sm font-medium text-gray-600;
+}
+
 /* Form Elements */
 .input-base {
     @apply w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary bg-light;
-  }
+}
 
 /* Buttons */
 .button-primary {
-    @apply bg-primary text-white py-3 px-5 rounded-full hover:bg-secondary focus:ring focus:ring-secondary shadow-md;
-  }
+    @apply bg-primary text-white py-3 px-5 rounded-lg hover:bg-secondary focus:ring focus:ring-secondary shadow-md;
+}
 
 /* Layout */
 .form-container {
     @apply max-w-md w-full space-y-6 bg-white p-8 rounded-lg shadow-lg;
-  }
+}
+
 /* Language Switcher */
 .language-switcher {
     @apply flex items-center justify-between w-20 p-2 bg-light rounded-full border border-gray-300;
-  }
+}
+
+/* Error Messages */
+.text-error {
+    @apply text-sm font-medium text-danger; /* Ensure this applies the danger color */
+}
+
+
+/* Updated Todo Form */
+.todo-form-container {
+  @apply flex items-center gap-4 p-4 bg-white shadow-md rounded-lg;
+}
+
+/* Shared Styles */
+.todo-form {
+  @apply bg-white border border-gray-300 rounded-md shadow-sm flex items-center p-4 gap-4;
+}
+
+.todo-input {
+  width: 100%; /* Ensure input takes full width */
+  max-width: 100%; /* Prevent overflow */
+}
+
+.todo-form-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%; /* Matches the width of TodoList */
+}
+
+.add-button {
+  @apply bg-primary text-white py-3 px-5 rounded-lg hover:bg-secondary focus:ring focus:ring-secondary shadow-md;
+}
+
+/* Page Layout */
+.page-container {
+  @apply mx-auto max-w-4xl px-6 py-8;
+}
+
