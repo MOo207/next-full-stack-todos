@@ -45,7 +45,7 @@ export default {
     // Customize the session object
     async session({ session, user, token }) {
       if (token?.id) {
-        session.user.id = token.id; // Add user ID to the session
+        session.user.id = token.id as string; // Add user ID to the session
       }
       return session;
     },
