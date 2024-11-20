@@ -68,7 +68,8 @@ const LoginContent = () => {
       await login(email, password);
       router.push(`/${locale}/todos`);
     } catch (err) {
-      if (err.message == "CredentialsSignin") {
+      const error = err as Error;
+      if (error.message == "CredentialsSignin") {
         setFormError(t("invalidCredentials"));
         } else
         setFormError(t("serverError"));

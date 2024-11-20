@@ -9,6 +9,7 @@ interface ButtonProps {
   onClick?: () => void;
   variant?: "primary" | "secondary";
   className?: string;
+  disabled?: boolean;
 }
 
 const Button = ({
@@ -17,11 +18,13 @@ const Button = ({
   onClick,
   variant = "primary",
   className,
+  disabled
 }: ButtonProps) => {
   return (
     <button
       onClick={onClick}
       type={type}
+      disabled={disabled}
       className={clsx(
         "button-base",
         {
