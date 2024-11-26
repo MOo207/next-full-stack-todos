@@ -5,6 +5,12 @@ This is a full-stack Todo application built with **Next.js**, **Prisma**, and **
 
 ---
 
+## Demo
+
+[Watch the Demo Video](https://drive.google.com/file/d/17zP4ZDjxmIci5njzQ5cf-tffQ3UQz1k-/view?usp=drive_link)
+
+---
+
 ## 🚀 Features
 
 - **User Authentication**: Secure login and logout functionality using NextAuth.js.
